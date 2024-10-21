@@ -454,9 +454,3 @@ make_CI <- function(vec, nn = "N/A", method = "N/A", alpha = 0.05,
 
 
 
-
-
-
-
-
-
