@@ -1,8 +1,6 @@
 setwd("~/BONNET/new_sim/")
 devtools::source_url("https://github.com/sayan-ch/network-bootstrap/blob/main/base_codes.R?raw=TRUE")
 
-library(ggpubr)
-
 # edge density
 
 if(!dir.exists("edge_den"))
