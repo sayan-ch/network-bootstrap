@@ -396,7 +396,7 @@ SONNET.boot.wgt <- function(A, B = 100, m = 2, h = h.avg.deg,
 ## theta.hat = estimated value of theta from original sample
 
 make_CI <- function(vec, nn = "N/A", method = "N/A", alpha = 0.05, 
-                    expected = NULL, theta.hat = NULL){
+                    expected = NULL, theta.hat = NULL, s = 0, o = 0, d = 1){
   len <- length(vec)
   
   pct_lower <- quantile(vec, alpha/2)
@@ -408,7 +408,9 @@ make_CI <- function(vec, nn = "N/A", method = "N/A", alpha = 0.05,
   sd_upper <- avg + qnorm(1 - alpha/2)*sd_
   
   list(
-    plot.table = data.table(method = rep(method, 2), n = rep(nn, 2), 
+    plot.table = data.table(method = rep(method, 2), n = rep(nn, 2),
+                            s = rep(s, 2), o = rep(o, 2),
+                            d = rep(d, 2),
                             type = c("pct", "sd"),
                             lower = c(pct_lower, sd_lower),
                             upper = c(pct_upper, sd_upper),
@@ -418,6 +420,7 @@ make_CI <- function(vec, nn = "N/A", method = "N/A", alpha = 0.05,
                             thetahat = rep(theta.hat, 2)
                             ),
     coverage = data.table(method = method, n = nn,
+                          s = s, o = o, d = d,
                           pct_covered = as.numeric(pct_lower <= expected & 
                                                      expected <= pct_upper),
                           pct_width = pct_upper - pct_lower,
