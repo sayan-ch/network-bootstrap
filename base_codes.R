@@ -110,7 +110,7 @@ avg.short.path <- function(A){
   mean_distance(gg, directed = F)
 }
 
-## kth Largest eigenvalue scaled by n*rho_n
+## kth largest eigenvalue scaled by n*rho_n
 
 largest.eig <- function(A, k = 1){
   eig <- partial_eigen(x = A, n = k, symmetric = T)
@@ -126,9 +126,9 @@ spectral.gap <- function(A){
 
 ## Ratio of largest to smallest eigenvalue
 
-eig.ratio <- function(A, d){
+eig.ratio <- function(A, d = 2){
   eig <- partial_eigen(x = A, n = d, symmetric = T)
-  eig$values[1]/eig$values[2]
+  eig$values[1]/eig$values[d]
 }
 
 ## Approximate trace of A^p / # closed walks of length p
