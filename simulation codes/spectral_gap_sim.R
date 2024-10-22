@@ -65,21 +65,28 @@ for(rr in 1:enum){
     
     theta.hat <- avg.short.path(gen$A)
     
-    time.ns.boot[ii] <- system.time(
-      ns.boot[[ii]] <- make_CI(node.samp.boot(
-        A = gen$A, B = 100, eta = nn[ii], fn = spectral.gap, ncore = ncnc),
+    time.ns.boot[ii] <- system.time({
+      tmp <- as.numeric(node.samp.boot(A = gen$A, B = 100, eta = nn[ii], 
+                                       fn = spectral.gap, ncore = ncnc))
+      
+      tmp2 <- tmp[!is.na(tmp)]
+      
+      ns.boot[[ii]] <- make_CI(tmp2,
         nn = nn[ii], method = "NSBoot", alpha = 0.05, 
         expected = exp.spectral.gap[ii], theta.hat = theta.hat,
-        s = 0, o = 0, d = dd)
+        s = 0, o = 0, d = dd)}
     )[3]
     
-    time.ase.par[ii] <- system.time(
-      ase.par[[ii]] <- make_CI(ASE.boot(
-        A = gen$A, B = 100, eta = nn[ii], d = dd, nonpara = F,
-        fn = spectral.gap, ncore = ncnc),
+    time.ase.par[ii] <- system.time({
+      tmp <- as.numeric(ASE.boot(A = gen$A, B = 100, eta = nn[ii], d = dd, 
+                                 nonpara = F, fn = spectral.gap, ncore = ncnc))
+      
+      tmp2 <- tmp[!is.na(tmp)]
+      
+      ase.par[[ii]] <- make_CI(tmp2,
         nn = nn[ii], method = "ASEpar", alpha = 0.05,
         expected = exp.spectral.gap[ii], theta.hat = theta.hat,
-        s = 0, o = 0, d = dd)
+        s = 0, o = 0, d = dd)}
     )[3]
     
     # time.ase.wgt[ii] <- system.time(
@@ -90,13 +97,16 @@ for(rr in 1:enum){
     #     s = 0, o = 0, d = dd)
     # )[3]
     
-    time.ase.nonpar[ii] <- system.time(
-      ase.nonpar[[ii]] <- make_CI(ASE.boot(
-        A = gen$A, B = 100, eta = nn[ii], d = dd, nonpara = T,
-        fn = spectral.gap, ncore = ncnc),
+    time.ase.nonpar[ii] <- system.time({
+      tmp <- as.numeric(ASE.boot(A = gen$A, B = 100, eta = nn[ii], d = dd, 
+                                 nonpara = T, fn = spectral.gap, ncore = ncnc))
+      
+      tmp2 <- tmp[!is.na(tmp)]
+      
+      ase.nonpar[[ii]] <- make_CI(tmp2,
         nn = nn[ii], method = "ASEnonpar", alpha = 0.05,
         expected = exp.spectral.gap[ii], theta.hat = theta.hat,
-        s = 0, o = 0, d = dd)
+        s = 0, o = 0, d = dd)}
     )[3]
     
     
@@ -134,13 +144,17 @@ for(rr in 1:enum){
             "\n", rep("-", length(ss)*length(oo)), 
             cc/(length(ss)*length(oo))*100, "%")
         
-        time.son.par[ii] <- system.time(
-          son.par[[ii]] <- make_CI(SONNET.boot(
-            A = gen$A, B = 100, s = si, o = oi, d = dd, nonpara = F,
-            boot.prop = 1, fn = spectral.gap, ncore = ncnc),
+        time.son.par[ii] <- system.time({
+          tmp <- as.numeric(SONNET.boot(A = gen$A, B = 100, s = si, o = oi, d = dd, 
+                                        nonpara = F, boot.prop = 1, fn = spectral.gap,
+                                        ncore = ncnc))
+          
+          tmp2 <- tmp[!is.na(tmp)]
+          
+          son.par[[ii]] <- make_CI(tmp2,
             nn = nn[ii], method = "SONNETpar", alpha = 0.05,
             expected = exp.spectral.gap[ii], theta.hat = theta.hat,
-            s = si, o = oi, d = dd)
+            s = si, o = oi, d = dd)}
         )[3]
         
         # time.son.wgt[ii] <- system.time(
